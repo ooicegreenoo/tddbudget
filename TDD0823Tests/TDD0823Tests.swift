@@ -69,6 +69,14 @@ final class Test0823Tests: XCTestCase {
 
         XCTAssertEqual(totalAmount, 0)
     }
+    
+    func test_閏月() {
+        let service = BudgetService(repo: MockBudgetRepo())
+
+        let totalAmount = service.totalAmount(start: "2024-02-28".toDate()!, end: "2024-03-01".toDate()!)
+
+        XCTAssertEqual(totalAmount, 2000)
+    }
 
 }
 
@@ -147,10 +155,11 @@ struct BudgetModel {
 class MockBudgetRepo: BudgetRepo {
     override func getAll() -> [BudgetModel]  {
         return [
-            BudgetModel.init(yearMonth: "202312", amount: 31000),
             BudgetModel.init(yearMonth: "202304", amount: 300),
             BudgetModel.init(yearMonth: "202305", amount: 30000),
-            BudgetModel.init(yearMonth: "202306", amount: 3000)
+            BudgetModel.init(yearMonth: "202306", amount: 3000),
+            BudgetModel.init(yearMonth: "202312", amount: 31000),
+            BudgetModel.init(yearMonth: "202402", amount: 29000),
         ]
     }
 }
@@ -160,8 +169,6 @@ extension String {
     func toDate(withFormat format: String = "yyyy-MM-dd")-> Date? {
         
         let dateFormatter = DateFormatter()
-//        dateFormatter.timeZone = TimeZone(identifier: "Asia/Tehran")
-//        dateFormatter.locale = Locale(identifier: "fa-IR")
         dateFormatter.calendar = Calendar(identifier: .gregorian)
         dateFormatter.dateFormat = format
         let date = dateFormatter.date(from: self)
@@ -200,8 +207,6 @@ extension Date {
     func toString(_ format: String = "yyyyMM") -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = format
-//        dateFormatter.locale = .tw
-//        dateFormatter.timeZone = timezone
         return dateFormatter.string(from: self)
     }
     
