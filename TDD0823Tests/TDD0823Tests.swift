@@ -178,19 +178,6 @@ extension String {
     }
 }
 
-func firstDayOfMonth(from yearMonth: String) -> Date? {
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "yyyy-MM"
-    
-    if let date = dateFormatter.date(from: yearMonth) {
-        let calendar = Calendar.current
-        let components = calendar.dateComponents([.year, .month], from: date)
-        return calendar.date(from: components)
-    }
-    
-    return nil
-}
-
 extension Date {
     
     func daysInMonth(_ monthNumber: Int? = nil, _ year: Int? = nil) -> Int {
@@ -251,8 +238,4 @@ extension Date {
 
         return calendar.dateComponents([.day], from: formerTime, to: endTime).day
     }
-
-}
-
-extension Date {
 }
