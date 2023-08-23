@@ -110,14 +110,13 @@ class BudgetService {
                     end_date = end
                 }
                 
-                let diffDay = end_date.diffDay(toTime: start)!
-                
-                let daysamount = (abs(diffDay) + 1) * perDay
+                let diffDay = start.diffDay(toTime: end_date)!
+                let daysamount = (diffDay + 1) * perDay
                 result += daysamount
             }
             else if end.year == budget_date.year && end.month == budget_date.month {
                 let diffDay = budget_date.firstDateOfMonth.diffDay(toTime: end)!
-                let daysamount = (abs(diffDay) + 1) * perDay
+                let daysamount = (diffDay + 1) * perDay
                 result += daysamount
             }
             else {
