@@ -88,15 +88,14 @@ class BudgetService {
     }
     
     func totalAmount(start: Date, end: Date) -> Decimal {
+        /// 非法日期
         if start > end {
             return Decimal(0)
         }
-        let budgets: [BudgetModel] = repo.getAll()
         
         let filters = self.filterBudget(start: start, end: end)
         
         // 取每月的一日金額
-        
         var result: Int = 0
         for budget in filters {
             let budget_date = budget.yearMonth.toDate(withFormat: "yyyyMM")!
@@ -129,7 +128,7 @@ class BudgetService {
     }
     
     /// 篩選預算日期區間
-    func filterBudget(start: Date, end: Date) -> [BudgetModel] {
+    private func filterBudget(start: Date, end: Date) -> [BudgetModel] {
         let budgets: [BudgetModel] = repo.getAll()
         
         return budgets.filter {
